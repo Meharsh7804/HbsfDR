@@ -1,0 +1,266 @@
+:root {
+    --bg-color: #FCE762;
+    --primary: #4F46E5;
+    --secondary: #FF477E;
+    --accent: #06D6A0;
+    --dark: #1E1E24;
+    --border-width: 4px;
+    --brutal-shadow: 6px 6px 0px var(--dark);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--dark);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background: var(--bg-color);
+    background-image: radial-gradient(var(--dark) 10%, transparent 11%), radial-gradient(var(--dark) 10%, transparent 11%);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    border-left: var(--border-width) solid var(--dark);
+    border-right: var(--border-width) solid var(--dark);
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+/* Panels */
+.panel {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 20px;
+    background: var(--bg-color);
+    background-image: radial-gradient(var(--dark) 10%, transparent 11%), radial-gradient(var(--dark) 10%, transparent 11%);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    z-index: 1;
+    transform: translateX(100%);
+}
+
+.panel.active { transform: translateX(0); z-index: 10; }
+.hidden { display: none !important; }
+
+/* Content Boxes */
+.content-box {
+    background: white;
+    border: var(--border-width) solid var(--dark);
+    box-shadow: var(--brutal-shadow);
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    width: 90%; max-width: 400px;
+    position: relative;
+    overflow: hidden; /* clip internal stuff but don't clip box itself */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.full-height { height: 85vh; justify-content: flex-start; }
+.relative-box { position: relative; }
+
+/* Typography */
+h1, h2 { font-family: 'Fredoka One', cursive; text-transform: uppercase; line-height: 1.2; margin-bottom: 15px; color: var(--dark); width: 100%; }
+.title-3d {
+    font-size: 2.2rem; color: var(--bg-color);
+    text-shadow: -2px -2px 0 var(--dark), 2px -2px 0 var(--dark), -2px 2px 0 var(--dark), 2px 2px 0 var(--dark), 4px 4px 0 var(--dark);
+}
+p { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; line-height: 1.4; width: 100%;}
+.small-text { font-size: 0.9rem; color: #666; }
+.highlight-text { background: var(--accent); color: var(--dark); padding: 5px 10px; border: 2px solid var(--dark); display: inline-block; transform: rotate(-2deg); }
+
+/* Buttons */
+.brutal-btn {
+    background: var(--primary); color: white; font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+    padding: 15px 20px; border: var(--border-width) solid var(--dark); box-shadow: var(--brutal-shadow);
+    border-radius: 12px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: all 0.1s;
+}
+.brutal-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px var(--dark); }
+.danger-btn { background: var(--secondary); animation: shake 0.5s infinite; }
+.bounce-btn { animation: pulse 2s infinite; }
+
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(2px, 2px) rotate(2deg); }
+    50% { transform: translate(-2px, -2px) rotate(-2deg); }
+    75% { transform: translate(-2px, 2px) rotate(1deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Roast Slider Level */
+.slider {
+    -webkit-appearance: none; width: 100%; height: 25px; background: #e0e0e0;
+    outline: none; border: 3px solid var(--dark); border-radius: 15px; margin: 20px 0;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 40px; height: 40px;
+    border-radius: 50%; background: var(--secondary); cursor: pointer;
+    border: 3px solid var(--dark); box-shadow: 2px 2px 0px var(--dark);
+}
+
+/* Draw Canvas Level */
+#draw-canvas {
+    width: 100%; height: 250px; background: white; border: 3px dashed var(--dark);
+    border-radius: 12px; margin: 10px 0; touch-action: none; cursor: crosshair;
+}
+
+/* Swipe Cards Level */
+.card-stack { position: relative; width: 100%; height: 250px; margin: 20px 0; }
+.swipe-card {
+    position: absolute; top: 0; left: 10%; width: 80%; height: 200px;
+    background: white; border: 4px solid var(--dark); box-shadow: var(--brutal-shadow);
+    border-radius: 16px; display: flex; justify-content: center; align-items: center;
+    font-size: 1.5rem; font-weight: bold; padding: 20px; text-align: center;
+    background-color: #ffd166;
+    transition: transform 0.4s ease;
+}
+.swipe-buttons { display: flex; justify-content: space-between; width: 100%; padding: 0 10%; }
+.swipe-btn {
+    width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--dark);
+    font-size: 1.2rem; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 0 var(--dark);
+}
+.nope-btn { background: #FF477E; }
+.yes-btn { background: #06D6A0; }
+.swipe-btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--dark); }
+
+/* Fortune Cookie */
+.cookie-container { position: relative; width: 200px; height: 150px; margin: 40px auto; cursor: pointer; }
+.cookie-left, .cookie-right {
+    position: absolute; top: 0; width: 100px; height: 150px;
+    background: #d4a373; border: 4px solid var(--dark); transition: transform 0.5s ease;
+    z-index: 2;
+}
+.cookie-left { left: 0; border-radius: 100px 0 0 100px; border-right: none; }
+.cookie-right { right: 0; border-radius: 0 100px 100px 0; border-left: none; box-shadow: inset 10px 0 0 rgba(0,0,0,0.1); }
+.fortune-paper {
+    position: absolute; top: 50px; left: 20px; width: 160px; height: 50px;
+    background: white; border: 2px solid var(--dark); display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: bold; opacity: 0; z-index: 1; transition: opacity 0.3s; padding: 5px;
+}
+.cookie-container.cracked .cookie-left { transform: translateX(-40px) rotate(-15deg); }
+.cookie-container.cracked .cookie-right { transform: translateX(40px) rotate(15deg); }
+.cookie-container.cracked .fortune-paper { opacity: 1; z-index: 3; }
+
+/* Award Ceremony */
+.trophy-list { display: flex; flex-direction: column; gap: 12px; width: 100%; margin: 15px 0; flex: 1; overflow-y: auto; }
+.trophy-row { display: flex; align-items: center; background: #f0f0f0; border: 3px solid var(--dark); border-radius: 12px; padding: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 3px 3px 0 var(--dark); flex-shrink: 0; }
+.trophy-row.revealed { background: #e8fff9; border-color: var(--accent); }
+.trophy-row:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--dark); }
+.trophy-icon { font-size: 2.5rem; margin-right: 12px; flex-shrink: 0; }
+.award-text-box { flex-grow: 1; text-align: left; font-weight: bold; font-size: 0.95rem; min-width: 0; }
+.mystery-text { color: #888; font-style: italic; }
+.actual-text { color: #06D6A0; text-shadow: 1px 1px 0 var(--dark); display: inline-block; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 0.9rem; line-height: 1.3; }
+
+/* Letter Panel — flat layout, nothing inside envelope */
+.letter-panel-layout {
+    width: 90%; max-width: 420px; height: 90vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 20px;
+    background: white;
+    border: var(--border-width) solid var(--dark); box-shadow: var(--brutal-shadow); border-radius: 16px;
+    overflow: hidden;
+}
+.letter-panel-layout h2, .letter-panel-layout p { width: 100%; }
+.letter-next-btn { width: 100%; margin-top: auto; flex-shrink: 0; }
+
+/* Envelope styles */
+.envelope-container { cursor: pointer; position: relative; width: 260px; height: 160px; flex-shrink: 0; margin: 20px auto; }
+.envelope { position: absolute; width: 100%; height: 100%; transition: opacity 0.4s; }
+.envelope-back { position: absolute; width: 100%; height: 100%; background: #FF477E; border-radius: 10px; border: var(--border-width) solid var(--dark); box-shadow: var(--brutal-shadow); z-index: 1; }
+.flap { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 70%; background: #ff2b6a; 
+    border-radius: 10px 10px 0 0; transform-origin: top; transition: transform 0.6s ease-in-out; 
+    z-index: 4; clip-path: polygon(0 0, 100% 0, 50% 100%); 
+}
+.envelope-front { 
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; 
+    background: #FF477E; border-radius: 0 0 10px 10px; clip-path: polygon(0 100%, 50% 40%, 100% 100%); 
+}
+.envelope-container.open .flap { transform: rotateX(180deg); z-index: 0; }
+.envelope-container.open { opacity: 0; pointer-events: none; transition: opacity 0.4s 0.5s; }
+
+/* Letter — outside envelope */
+.letter {
+    display: none;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    background: #fffdf5;
+    border: var(--border-width) solid var(--dark);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+.letter.opened { display: block; animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.letter-content { opacity: 1; }
+.emotional-text { font-family: 'Rubik', sans-serif; font-weight: 500; margin-bottom: 12px; font-size: 1rem; line-height: 1.5; color: var(--dark); width: 100%; }
+
+/* Sorry Screen */
+.sorry-box { justify-content: center; gap: 8px; }
+.sorry-emoji { font-size: 5rem; animation: sway 2s ease-in-out infinite; display: block; margin-bottom: 10px; }
+@keyframes sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+.sorry-sub { font-size: 0.95rem !important; color: #666 !important; font-weight: 500 !important; width: 100%; }
+
+/* Sad Screen */
+.sad-box { justify-content: center; background: #1a1a1a !important; }
+.sad-box h1, .sad-box p { color: white !important; }
+.sad-anim { font-size: 4rem; animation: bounce 0.6s infinite alternate; display: block; margin-bottom: 10px; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+
+/* Decision Buttons — force them side by side and contained */
+.decision-buttons { display: flex; gap: 15px; width: 100%; margin-top: 30px; justify-content: center; }
+.decision-yes { background: var(--accent) !important; flex: 1; font-size: 1rem !important; padding: 12px 10px !important; }
+.decision-no { background: var(--secondary) !important; flex: 1; font-size: 1rem !important; padding: 12px 10px !important; }
+
+
+/* Reused from before */
+#catch-game-area { width: 100%; height: 150px; border: 3px dashed var(--dark); background: #e0e0e0; border-radius: 12px; position: relative; overflow: hidden; margin: 10px 0; }
+#moving-target { font-size: 3rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); cursor: pointer; }
+.progress-bar { width: 100%; height: 20px; border: 3px solid var(--dark); border-radius: 10px; background: white; overflow: hidden; }
+#catch-progress { width: 0%; height: 100%; background: var(--accent); transition: width 0.3s; }
+#bubble-container { flex-grow: 1; position: relative; width: 100%; border: 3px solid var(--dark); background: #bde0fe; border-radius: 12px; overflow: hidden; margin-top: 10px; }
+.bubble { position: absolute; background: white; border: 2px solid var(--dark); border-radius: 50px; padding: 10px 15px; font-weight: bold; font-size: 0.9rem; color: var(--dark); box-shadow: 2px 2px 0px var(--dark); cursor: pointer; white-space: nowrap; }
+.bubble:active { transform: scale(0.9); }
+.bubble.popped { transform: scale(1.5); opacity: 0; pointer-events: none; transition: all 0.2s ease-out; }
+.scratch-wrapper { position: relative; width: 250px; height: 250px; margin: 10px auto; border: var(--border-width) solid var(--dark); box-shadow: var(--brutal-shadow); border-radius: 12px; overflow: hidden; }
+.photo-underneath { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; }
+.photo-underneath img { width: 100%; height: 100%; object-fit: cover; }
+.replace-hint { position: absolute; bottom: 5px; left: 0; width: 100%; text-align: center; background: rgba(0,0,0,0.6); color: white; font-size: 0.7rem; padding: 2px; }
+#scratch-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; cursor: pointer; }
+.image-box { border: var(--border-width) solid var(--dark); border-radius: 12px; overflow: hidden; margin: 20px auto; width: 150px; height: 150px; box-shadow: 4px 4px 0px var(--accent); }
+.image-box img { width: 100%; height: 100%; object-fit: cover; }
+.wobble-img { animation: wobble 3s infinite ease-in-out; }
+@keyframes wobble { 0%, 100% { transform: rotate(-3deg) scale(1); } 50% { transform: rotate(3deg) scale(1.05); } }
+#matter-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+.z-10 { z-index: 10; }
+.bouncing-letters span { display: inline-block; animation: bounceText 1s infinite alternate ease-in-out; }
+@keyframes bounceText { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+.success-text { color: var(--accent); text-shadow: 2px 2px 0px var(--dark); margin-top: 10px; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
