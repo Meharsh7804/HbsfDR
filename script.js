@@ -93,7 +93,7 @@ function initRoastSlider() {
 // --- LEVEL 4: Bubbles ---
 function initBubbleGame() {
     const container = document.getElementById('bubble-container');
-    const mistakes = ["Being Late", "Forgetting Stuff", "Eating Ur Food", "Silly Fights", "Bad Jokes"];
+    const mistakes = ["Hamesha jldi aake tujhe bhi jldi aane ko bolna ⏱", "Kbhi bhi gayab ho jana 👻", "Ragebait krna 🤬", "Jidd krnaa 😤", "Faaltu k jokess marna 😬"];
     let popped = 0;
 
     mistakes.forEach((text, i) => setTimeout(() => createBubble(text), i * 500));
@@ -200,12 +200,36 @@ function initScratchCard() {
 }
 
 // --- LEVEL 8: Cookie ---
-function crackCookie() {
-    const container = document.querySelector('.cookie-container');
-    if(container.classList.contains('cracked')) return;
+const fortuneTexts = [
+    'So u interested...okay then 😏',
+    'We both are in same city doing same job.'
+];
+
+function crackCookie(num) {
+    const container = document.getElementById(`cookie-${num}`);
+    if (container.classList.contains('cracked')) return;
     container.classList.add('cracked');
     fireConfetti();
-    document.getElementById('btn-cookie-next').classList.remove('hidden');
+
+    // Add message to the shared area below cookies
+    const msgArea = document.getElementById('fortune-messages');
+    const msg = document.createElement('p');
+    msg.className = 'fortune-msg';
+    msg.textContent = fortuneTexts[num - 1];
+    msgArea.appendChild(msg);
+    gsap.from(msg, { scale: 0, duration: 0.4, ease: 'back.out(1.7)' });
+
+    if (num === 1) {
+        setTimeout(() => {
+            const cookie2 = document.getElementById('cookie-2');
+            cookie2.classList.remove('hidden');
+            gsap.from(cookie2, { scale: 0, duration: 0.5, ease: 'back.out(1.7)' });
+        }, 700);
+    } else if (num === 2) {
+        const btn = document.getElementById('btn-cookie-next');
+        btn.classList.remove('hidden');
+        gsap.from(btn, { y: 20, opacity: 0, duration: 0.4, ease: 'back.out(1.7)' });
+    }
 }
 
 // --- LEVEL 9: Awards ---
@@ -233,11 +257,11 @@ function openEnvelope() {
     if(container.classList.contains('open')) return;
     container.classList.add('open');
 
-    // After envelope fades, hide heading/hint and show letter
+    // After envelope fades AND collapses (CSS: ~1.1s), hide heading/hint and show letter
     setTimeout(() => {
         document.getElementById('letter-heading').style.display = 'none';
         document.getElementById('letter-hint').style.display = 'none';
-        
+
         const letter = document.getElementById('the-letter');
         letter.classList.add('opened');
 
@@ -245,8 +269,8 @@ function openEnvelope() {
         setTimeout(() => {
             document.getElementById('btn-letter-next').classList.remove('hidden');
             gsap.from('#btn-letter-next', { y: 30, opacity: 0, duration: 0.4, ease: 'back.out(1.7)' });
-        }, 600);
-    }, 1000);
+        }, 500);
+    }, 1200);
 }
 
 // --- LEVEL 11: Sorry Screen ---
